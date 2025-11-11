@@ -1,49 +1,32 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_IMAGE = 'your-docker-username/static-site:latest'
-    }
-
     stages {
-        stage('Checkout Code') {
+        stage('Build') {
             steps {
-                echo 'Cloning the GitHub repository...'
-                checkout scm
+                echo 'Building the project...'
             }
         }
 
-        stage('Pull Docker Image') {
+        stage('Test') {
             steps {
-                echo 'Pulling latest Docker image from Docker Hub...'
-                sh 'docker pull $DOCKER_IMAGE'
+                echo 'Running tests...'
             }
         }
 
-        stage('Deploy Container') {
+        stage('Deploy') {
             steps {
-                echo 'Deploying the Docker container...'
-                sh '''
-                    # Stop and remove old container if it exists
-                    docker stop static-site || true
-                    docker rm static-site || true
-
-                    # Run the latest container
-                    docker run -d \
-                      --name static-site \
-                      -p 8080:80 \
-                      $DOCKER_IMAGE
-                '''
+                echo 'Deploying application...'
             }
         }
     }
 
     post {
         success {
-            echo '✅ Deployment successful! Your static site is now running on port 8080.'
+            echo '✅ Pipeline completed successfully!'
         }
         failure {
-            echo '❌ Deployment failed. Check logs for details.'
-        }
-    }
+            echo '❌ Pipeline failed!'
+        }
+    }
 }
