@@ -1,32 +1,36 @@
 pipeline {
-    agent any
+agent any
 
-    stages {
-        stage('Build') {
-            steps {
-                echo 'Building the project...'
-            }
-        }
 
-        stage('Test') {
-            steps {
-                echo 'Running tests...'
-            }
-        }
+stages {
+stage('Build') {
+steps {
+echo 'Building the project...'
+}
+}
 
-        stage('Deploy') {
-            steps {
-                echo 'Deploying application...'
-            }
-        }
-    }
 
-    post {
-        success {
-            echo '✅ Pipeline completed successfully!'
-        }
-        failure {
-            echo '❌ Pipeline failed!'
-        }
-    }
+stage('Test') {
+steps {
+echo 'Running tests...'
+}
+}
+
+
+stage('Deploy') {
+steps {
+echo 'Deploying application...'
+}
+}
+}
+
+
+post {
+success {
+echo '✅ Pipeline completed successfully!'
+}
+failure {
+echo '❌ Pipeline failed!'
+}
+}
 }
